@@ -1,0 +1,452 @@
+<html><head><base design-ui.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMG  - Design de Interface de Usuário</title>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+  
+      :root {
+          --primary-color: #4a90e2;
+          --secondary-color: #f5a623;
+          --accent-color: #2ecc71;
+          --bg-color: #f9f9f9;
+          --text-color: #333;
+          --header-height: 80px;
+      }
+  
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+  
+      body {
+          font-family: 'Montserrat', sans-serif;
+          background-color: var(--bg-color);
+          color: var(--text-color);
+          line-height: 1.6;
+      }
+  
+      header {
+          background-color: rgba(255, 255, 255, 0.98);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: var(--header-height);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 5%;
+          z-index: 1000;
+          transition: all 0.3s ease;
+      }
+  
+      .logo {
+          font-size: 2.5rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      }
+  
+      .menu-icon {
+          cursor: pointer;
+          font-size: 1.8rem;
+          color: var(--primary-color);
+          transition: all 0.3s ease;
+      }
+  
+      .menu-icon:hover {
+          color: var(--secondary-color);
+      }
+  
+      .sidebar {
+          position: fixed;
+          top: var(--header-height);
+          right: -300px;
+          width: 300px;
+          height: calc(100% - var(--header-height));
+          background-color: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          transition: 0.4s ease;
+          padding: 2rem;
+          box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+          z-index: 999;
+      }
+  
+      .sidebar.active {
+          right: 0;
+      }
+  
+      .sidebar a {
+          display: block;
+          padding: 15px 0;
+          text-decoration: none;
+          color: var(--text-color);
+          font-size: 1.1rem;
+          transition: 0.3s ease;
+          border-bottom: 1px solid #eee;
+      }
+  
+      .sidebar a:hover {
+          color: var(--primary-color);
+          transform: translateX(-10px);
+      }
+  
+      main {
+          margin-top: var(--header-height);
+          padding: 4rem 5%;
+      }
+  
+      .hero {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          text-align: center;
+          padding: 10rem 0;
+          color: #fff;
+          border-radius: 15px;
+          margin-bottom: 4rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+      }
+  
+      .hero h1 {
+          font-size: 3.5rem;
+          margin-bottom: 2rem;
+          text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      }
+  
+      .hero p {
+          font-size: 1.5rem;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+      }
+  
+      .cta-button {
+          display: inline-block;
+          background-color: #fff;
+          color: var(--primary-color);
+          padding: 1rem 2.5rem;
+          font-size: 1.2rem;
+          text-decoration: none;
+          border-radius: 50px;
+          transition: 0.4s ease;
+          font-weight: 600;
+      }
+  
+      .cta-button:hover {
+          background-color: var(--accent-color);
+          color: #fff;
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+  
+      .service-details {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          margin-top: 4rem;
+      }
+  
+      .service-description {
+          flex: 1;
+          min-width: 300px;
+          padding-right: 2rem;
+      }
+  
+      .service-features {
+          flex: 1;
+          min-width: 300px;
+      }
+  
+      h2 {
+          font-size: 2.5rem;
+          margin-bottom: 1.5rem;
+          color: var(--primary-color);
+      }
+  
+      .feature-list {
+          list-style-type: none;
+      }
+  
+      .feature-list li {
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+      }
+  
+      .feature-icon {
+          margin-right: 1rem;
+          font-size: 1.5rem;
+          color: var(--accent-color);
+      }
+  
+      .portfolio {
+          margin-top: 6rem;
+      }
+  
+      .portfolio-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+      }
+  
+      .portfolio-item {
+          background-color: #fff;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+          transition: 0.3s ease;
+      }
+  
+      .portfolio-item:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+  
+      .portfolio-item img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+      }
+  
+      .portfolio-item-content {
+          padding: 1.5rem;
+      }
+  
+      .portfolio-item h3 {
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+          color: var(--primary-color);
+      }
+  
+      footer {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: #fff;
+          text-align: center;
+          padding: 5rem 0;
+          margin-top: 6rem;
+      }
+  
+      .footer-content {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+  
+      .footer-section {
+          margin-bottom: 2rem;
+      }
+  
+      .footer-section h3 {
+          margin-bottom: 1rem;
+      }
+  
+      .footer-section ul {
+          list-style-type: none;
+      }
+  
+      .footer-section ul li {
+          margin-bottom: 0.5rem;
+      }
+  
+      .footer-section ul li a {
+          color: #fff;
+          text-decoration: none;
+      }
+  
+      .social-icons {
+          font-size: 1.8rem;
+          margin-top: 1rem;
+      }
+  
+      .social-icons a {
+          color: #fff;
+          margin: 0 1rem;
+          transition: 0.4s ease;
+      }
+  
+      .social-icons a:hover {
+          color: var(--accent-color);
+          transform: translateY(-5px);
+      }
+  
+      .chat-bot {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: #fff;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          transition: 0.3s ease;
+          z-index: 1000;
+      }
+  
+      .chat-bot:hover {
+          transform: scale(1.1);
+      }
+  
+      .chat-bot-icon {
+          font-size: 2rem;
+      }
+  
+      @media (max-width: 768px) {
+          .hero h1 {
+              font-size: 2.5rem;
+          }
+          .hero p {
+              font-size: 1.2rem;
+          }
+          .service-details {
+              flex-direction: column;
+          }
+          .service-description, .service-features {
+              padding-right: 0;
+              margin-bottom: 2rem;
+          }
+          .footer-content {
+              flex-direction: column;
+              align-items: center;
+          }
+      }
+  </style>
+  </head>
+  <body>
+      <header>
+          <a href="index.html" class="logo">GMG</a>
+          <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+      </header>
+  
+      <div class="sidebar" id="sidebar">
+          <a href="index.html">Home</a>
+          <a href="servicos.html">Serviços</a>
+          <a href="sobre.html">Sobre Nós</a>
+          <a href="planos.html">Planos</a>
+          <a href="testimonials.html">Contato</a>
+          <a href="ferramentas.html">Ferramentas</a>
+      </div>
+  
+      <main>
+          <section class="hero">
+              <h1>Design de Interface de Usuário</h1>
+              <p>Criamos experiências digitais que encantam seus usuários e impulsionam seu negócio</p>
+              <a href="#contato" class="cta-button">Solicite um Orçamento</a>
+          </section>
+  
+          <section class="service-details">
+              <div class="service-description">
+                  <h2>Por que escolher nosso Design de UI?</h2>
+                  <p>Na GMG , entendemos que uma interface de usuário bem projetada é a chave para o sucesso de qualquer produto digital. Nossa equipe de designers especializados combina criatividade, conhecimento técnico e as melhores práticas de UX/UI para criar interfaces intuitivas, atraentes e altamente funcionais.</p>
+                  <p>Nosso processo de design é centrado no usuário, garantindo que cada elemento da interface seja cuidadosamente pensado para proporcionar a melhor experiência possível. Trabalhamos em estreita colaboração com nossos clientes para entender seus objetivos de negócio e as necessidades de seus usuários, resultando em designs que não apenas impressionam visualmente, mas também impulsionam conversões e engagement.</p>
+              </div>
+              <div class="service-features">
+                  <h2>O que oferecemos</h2>
+                  <ul class="feature-list">
+                      <li><span class="feature-icon">🎨</span> Design de interfaces responsivas</li>
+                      <li><span class="feature-icon">📱</span> Design de aplicativos móveis (iOS e Android)</li>
+                      <li><span class="feature-icon">💻</span> Design de websites e landing pages</li>
+                      <li><span class="feature-icon">🔍</span> Pesquisa de usuários e testes de usabilidade</li>
+                      <li><span class="feature-icon">📊</span> Prototipagem e wireframing</li>
+                      <li><span class="feature-icon">🎭</span> Design de identidade visual e branding</li>
+                      <li><span class="feature-icon">🔄</span> Redesign de interfaces existentes</li>
+                  </ul>
+              </div>
+          </section>
+  
+          <section class="portfolio">
+              <h2>Nosso Portfólio</h2>
+              <div class="portfolio-grid">
+                  <div class="portfolio-item">
+                      <img src="https://gmg-startup.com/portfolio-ui-1.jpg" alt="Interface de aplicativo de finanças pessoais" width="300" height="200">
+                      <div class="portfolio-item-content">
+                          <h3>FinanceTrack App</h3>
+                          <p>Aplicativo de finanças pessoais com design intuitivo e fácil de usar.</p>
+                      </div>
+                  </div>
+                  <div class="portfolio-item">
+                      <img src="https://gmg-startup.com/portfolio-ui-2.jpg" alt="Website de e-commerce de moda sustentável" width="300" height="200">
+                      <div class="portfolio-item-content">
+                          <h3>EcoFashion Store</h3>
+                          <p>E-commerce de moda sustentável com interface clean e moderna.</p>
+                      </div>
+                  </div>
+                  <div class="portfolio-item">
+                      <img src="https://gmg-startup.com/portfolio-ui-3.jpg" alt="Dashboard de análise de dados" width="300" height="200">
+                      <div class="portfolio-item-content">
+                          <h3>DataViz Pro</h3>
+                          <p>Dashboard de análise de dados com visualizações complexas simplificadas.</p>
+                      </div>
+                  </div>
+                  <div class="portfolio-item">
+                      <img src="https://gmg-startup.com/portfolio-ui-4.jpg" alt="Aplicativo de entrega de comida" width="300" height="200">
+                      <div class="portfolio-item-content">
+                          <h3>FoodExpress</h3>
+                          <p>App de entrega de comida com interface colorida e fácil navegação.</p>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </main>
+  
+      <footer>
+          <div class="footer-content">
+              <div class="footer-section">
+                  <h3>Links Rápidos</h3>
+                  <ul>
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="servicos.html">Serviços</a></li>
+                      <li><a href="sobre.html">Sobre Nós</a></li>
+                      <li><a href="planos.html">Planos</a></li>
+                      <li><a href="testimonials.html">Contato</a></li>
+                  </ul>
+              </div>
+              <div class="footer-section">
+                  <h3>Contato</h3>
+                  <p>Email: info@gmgstartup.com</p>
+                  <p>Telefone: (11) 1234-5678</p>
+                  <p>Endereço: Av. Paulista, 1000 - São Paulo, SP</p>
+              </div>
+              <div class="footer-section">
+                  <h3>Siga-nos</h3>
+                  <div class="social-icons">
+                      <a href="https://facebook.com/gmgstartup"><i class="fab fa-facebook"></i></a>
+                      <a href="https://twitter.com/gmgstartup"><i class="fab fa-twitter"></i></a>
+                      <a href="https://linkedin.com/company/gmgstartup"><i class="fab fa-linkedin"></i></a>
+                      <a href="https://instagram.com/gmgstartup"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+          </div>
+          <p>© 2023 GMG . Transformando ideias em realidade digital.</p>
+      </footer>
+  
+      <div class="chat-bot" onclick="openChatBot()">
+          <div class="chat-bot-icon">💬</div>
+      </div>
+  
+      <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+      <script>
+          function toggleSidebar() {
+              document.getElementById('sidebar').classList.toggle('active');
+          }
+  
+          function openChatBot() {
+              alert("Chat bot em desenvolvimento. Em breve estaremos aqui para ajudar!");
+          }
+      </script>
+  
+  </body></html>

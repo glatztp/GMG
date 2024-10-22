@@ -1,0 +1,522 @@
+<html><head><base services.html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMG  - Planos</title>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+  
+      :root {
+          --primary-color: #4a90e2;
+          --secondary-color: #f5a623;
+          --accent-color: #2ecc71;
+          --bg-color: #f9f9f9;
+          --text-color: #333;
+          --header-height: 80px;
+      }
+  
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+  
+      body {
+          font-family: 'Montserrat', sans-serif;
+          background-color: var(--bg-color);
+          color: var(--text-color);
+          line-height: 1.6;
+      }
+  
+      header {
+          background-color: rgba(255, 255, 255, 0.98);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: var(--header-height);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 5%;
+          z-index: 1000;
+          transition: all 0.3s ease;
+      }
+  
+      .logo {
+          font-size: 2.5rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      }
+  
+      .menu-icon {
+          cursor: pointer;
+          font-size: 1.8rem;
+          color: var(--primary-color);
+          transition: all 0.3s ease;
+      }
+  
+      .menu-icon:hover {
+          color: var(--secondary-color);
+      }
+  
+      .sidebar {
+          position: fixed;
+          top: var(--header-height);
+          right: -300px;
+          width: 300px;
+          height: calc(100% - var(--header-height));
+          background-color: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          transition: 0.4s ease;
+          padding: 2rem;
+          box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+          z-index: 999;
+      }
+  
+      .sidebar.active {
+          right: 0;
+      }
+  
+      .sidebar a {
+          display: block;
+          padding: 15px 0;
+          text-decoration: none;
+          color: var(--text-color);
+          font-size: 1.1rem;
+          transition: 0.3s ease;
+          border-bottom: 1px solid #eee;
+      }
+  
+      .sidebar a:hover {
+          color: var(--primary-color);
+          transform: translateX(-10px);
+      }
+  
+      main {
+          margin-top: var(--header-height);
+          padding: 4rem 5%;
+      }
+  
+      .hero {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+          text-align: center;
+          padding: 6rem 0;
+          color: #fff;
+          border-radius: 15px;
+          margin-bottom: 4rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+  
+      .hero h1 {
+          font-size: 3.5rem;
+          margin-bottom: 1rem;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      }
+  
+      .hero p {
+          font-size: 1.2rem;
+          max-width: 800px;
+          margin: 0 auto;
+      }
+  
+      .plans-container {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 2rem;
+          margin-top: 4rem;
+      }
+  
+      .plan {
+          background-color: #fff;
+          border-radius: 15px;
+          padding: 2rem;
+          width: 300px;
+          text-align: center;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+      }
+  
+      .plan:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      }
+  
+      .plan h2 {
+          color: var(--primary-color);
+          font-size: 1.8rem;
+          margin-bottom: 1rem;
+      }
+  
+      .plan .price {
+          font-size: 2.5rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+      }
+  
+      .plan ul {
+          list-style-type: none;
+          padding: 0;
+          margin-bottom: 2rem;
+      }
+  
+      .plan ul li {
+          margin-bottom: 0.5rem;
+      }
+  
+      .plan .cta-button {
+          background-color: var(--primary-color);
+          color: #fff;
+          padding: 0.8rem 2rem;
+          border-radius: 50px;
+          text-decoration: none;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          display: inline-block;
+      }
+  
+      .plan .cta-button:hover {
+          background-color: var(--secondary-color);
+          transform: scale(1.05);
+      }
+  
+      .comparison-table {
+          width: 100%;
+          max-width: 1000px;
+          margin: 4rem auto;
+          border-collapse: collapse;
+          background-color: #fff;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          border-radius: 15px;
+          overflow: hidden;
+      }
+  
+      .comparison-table th, .comparison-table td {
+          padding: 1rem;
+          text-align: center;
+          border: 1px solid #eee;
+      }
+  
+      .comparison-table th {
+          background-color: var(--primary-color);
+          color: #fff;
+      }
+  
+      .comparison-table tr:nth-child(even) {
+          background-color: #f8f8f8;
+      }
+  
+      .faq-section {
+          max-width: 800px;
+          margin: 4rem auto;
+      }
+  
+      .faq-item {
+          background-color: #fff;
+          border-radius: 15px;
+          padding: 1.5rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+  
+      .faq-question {
+          font-weight: bold;
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+  
+      .faq-answer {
+          margin-top: 1rem;
+          display: none;
+      }
+  
+      .faq-toggle {
+          font-size: 1.5rem;
+          transition: transform 0.3s ease;
+      }
+  
+      .faq-item.active .faq-toggle {
+          transform: rotate(45deg);
+      }
+  
+      .faq-item.active .faq-answer {
+          display: block;
+      }
+  
+      footer {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: #fff;
+          text-align: center;
+          padding: 3rem 0;
+          margin-top: 4rem;
+      }
+  
+      .footer-content {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+  
+      .footer-section {
+          margin-bottom: 2rem;
+      }
+  
+      .footer-section h3 {
+          margin-bottom: 1rem;
+      }
+  
+      .footer-section ul {
+          list-style-type: none;
+      }
+  
+      .footer-section ul li {
+          margin-bottom: 0.5rem;
+      }
+  
+      .footer-section ul li a {
+          color: #fff;
+          text-decoration: none;
+      }
+  
+      .social-icons {
+          font-size: 1.5rem;
+          margin-top: 1rem;
+      }
+  
+      .social-icons a {
+          color: #fff;
+          margin: 0 0.5rem;
+          transition: 0.3s ease;
+      }
+  
+      .social-icons a:hover {
+          color: var(--accent-color);
+      }
+  
+      @media (max-width: 768px) {
+          .hero h1 {
+              font-size: 2.5rem;
+          }
+          .hero p {
+              font-size: 1rem;
+          }
+          .plans-container {
+              flex-direction: column;
+              align-items: center;
+          }
+          .plan {
+              width: 100%;
+              max-width: 300px;
+          }
+          .comparison-table {
+              font-size: 0.9rem;
+          }
+          .footer-content {
+              flex-direction: column;
+              align-items: center;
+          }
+      }
+  </style>
+  </head>
+  <body>
+      <header>
+          <a href="index.html" class="logo">GMG</a>
+          <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+      </header>
+  
+      <div class="sidebar" id="sidebar">
+          <a href="index.html">Home</a>
+          
+          <a href="about.html">Sobre Nós</a>
+          <a href="services.html">Planos</a>
+          <a href="testimonials.html">Contato</a>
+          <a href="ferramentas.html">Ferramentas</a>v
+      </div>
+  
+      <main>
+          <section class="hero">
+              <h1>Nossos Planos</h1>
+              <p>Escolha o plano ideal para impulsionar sua startup rumo ao sucesso digital</p>
+          </section>
+  
+          <section class="plans-container">
+              <div class="plan">
+                  <h2>Plano Básico</h2>
+                  <p class="price">R$ 999/mês</p>
+                  <ul>
+                      <li>Desenvolvimento de site básico</li>
+                      <li>SEO básico</li>
+                      <li>Suporte por e-mail</li>
+                      <li>Atualizações mensais</li>
+                  </ul>
+                  <a href="#" class="cta-button">Começar Agora</a>
+              </div>
+              <div class="plan">
+                  <h2>Plano Crescimento</h2>
+                  <p class="price">R$ 2.499/mês</p>
+                  <ul>
+                      <li>Desenvolvimento de site avançado</li>
+                      <li>SEO avançado</li>
+                      <li>Suporte prioritário</li>
+                      <li>Atualizações semanais</li>
+                      <li>Integração de mídias sociais</li>
+                  </ul>
+                  <a href="#" class="cta-button">Escolher Plano</a>
+              </div>
+              <div class="plan">
+                  <h2>Plano Premium</h2>
+                  <p class="price">R$ 4.999/mês</p>
+                  <ul>
+                      <li>Desenvolvimento de site personalizado</li>
+                      <li>SEO premium + Marketing Digital</li>
+                      <li>Suporte 24/7</li>
+                      <li>Atualizações ilimitadas</li>
+                      <li>App móvel + Integração completa</li>
+                  </ul>
+                  <a href="#" class="cta-button">Iniciar Premium</a>
+              </div>
+          </section>
+  
+          <section>
+              <h2>Comparação de Planos</h2>
+              <table class="comparison-table">
+                  <thead>
+                      <tr>
+                          <th>Recursos</th>
+                          <th>Plano Básico</th>
+                          <th>Plano Crescimento</th>
+                          <th>Plano Premium</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Desenvolvimento de Site</td>
+                          <td>Básico</td>
+                          <td>Avançado</td>
+                          <td>Personalizado</td>
+                      </tr>
+                      <tr>
+                          <td>SEO</td>
+                          <td>Básico</td>
+                          <td>Avançado</td>
+                          <td>Premium</td>
+                      </tr>
+                      <tr>
+                          <td>Suporte</td>
+                          <td>E-mail</td>
+                          <td>Prioritário</td>
+                          <td>24/7</td>
+                      </tr>
+                      <tr>
+                          <td>Atualizações</td>
+                          <td>Mensais</td>
+                          <td>Semanais</td>
+                          <td>Ilimitadas</td>
+                      </tr>
+                      <tr>
+                          <td>Integração de Mídias Sociais</td>
+                          <td>-</td>
+                          <td>✓</td>
+                          <td>✓</td>
+                      </tr>
+                      <tr>
+                          <td>App Móvel</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>✓</td>
+                      </tr>
+                      <tr>
+                          <td>Marketing Digital</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>✓</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </section>
+  
+          <section class="faq-section">
+              <h2>Perguntas Frequentes</h2>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      Posso mudar de plano depois?
+                      <span class="faq-toggle">+</span>
+                  </div>
+                  <div class="faq-answer">
+                      Sim, você pode atualizar ou fazer downgrade do seu plano a qualquer momento. As mudanças entrarão em vigor no próximo ciclo de faturamento.
+                  </div>
+              </div>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      Há um contrato de longo prazo?
+                      <span class="faq-toggle">+</span>
+                  </div>
+                  <div class="faq-answer">
+                      Não, nossos planos são mensais e você pode cancelar a qualquer momento sem multas ou taxas adicionais.
+                  </div>
+              </div>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      O que está incluído no suporte?
+                      <span class="faq-toggle">+</span>
+                  </div>
+                  <div class="faq-answer">
+                      O suporte inclui assistência técnica, resolução de problemas e orientações gerais sobre o uso de nossos serviços. O nível de suporte varia de acordo com o plano escolhido.
+                  </div>
+              </div>
+          </section>
+      </main>
+  
+      <footer>
+          <div class="footer-content">
+              <div class="footer-section">
+                  <h3>Links Rápidos</h3>
+                  <ul>
+                      <li><a href="index.html">Home</a></li>
+                      <li></li>
+                      <li><a href="about.html">Sobre Nós</a></li>
+                      <li><a href="services.html">Planos</a></li>
+                      <li><a href="testimonials.html">Contato</a></li>
+                  </ul>
+              </div>
+              <div class="footer-section">
+                  <h3>Contato</h3>
+                  <p>Email: contato@gmgstartup.com</p>
+                  <p>Telefone: (11) 9876-5432</p>
+                  <p>Endereço: Av. Paulista, 1000 - São Paulo, SP</p>
+              </div>
+              <div class="footer-section">
+                  <h3>Siga-nos</h3>
+                  <div class="social-icons">
+                      <a href="https://facebook.com/gmgstartup"><i class="fab fa-facebook"></i></a>
+                      <a href="https://twitter.com/gmgstartup"><i class="fab fa-twitter"></i></a>
+                      <a href="https://linkedin.com/company/gmgstartup"><i class="fab fa-linkedin"></i></a>
+                      <a href="https://instagram.com/gmgstartup"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+          </div>
+          <p>© 2023 GMG . Todos os direitos reservados.</p>
+      </footer>
+  
+      <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+      <script>
+          function toggleSidebar() {
+              document.getElementById('sidebar').classList.toggle('active');
+          }
+  
+          document.querySelectorAll('.faq-question').forEach(question => {
+              question.addEventListener('click', () => {
+                  const faqItem = question.parentElement;
+                  faqItem.classList.toggle('active');
+              });
+          });
+      </script>
+  </body></html>
